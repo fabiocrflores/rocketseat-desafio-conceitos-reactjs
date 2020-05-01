@@ -14,9 +14,9 @@ function App() {
 
   async function handleAddRepository() {
     const response = await api.post('repositories', {
-      "url": "https://github.com/fabiocrflores/desafio-conceitos-node",
-      "title": "Desafio Node.js",
-      "techs": 
+      url: "https://github.com/fabiocrflores/desafio-conceitos-node",
+      title: `Desafio Node.js ${Date.now()}`,
+      techs: 
       [
         "Node",
         "Express",
@@ -30,8 +30,10 @@ function App() {
 
   async function handleRemoveRepository(id) {
     await api.delete('repositories/'+id);
-    const newRepositories = repositories.splice(id, 1);
-    setRepositories(newRepositories);
+    const newRepositories = repositories.filter(repository => {
+      return repository.id !== id;
+    });
+    setRepositories([...newRepositories]);
   }
 
   return (
